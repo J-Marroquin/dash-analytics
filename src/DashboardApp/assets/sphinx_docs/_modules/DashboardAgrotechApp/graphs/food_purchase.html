@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DashboardAgrotechApp.graphs.food_purchase &mdash; Dashboard AgrotechApp 0.6.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+
+  
+      <script src="../../../_static/jquery.js"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+      <script src="../../../_static/doctools.js"></script>
+      <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Dashboard AgrotechApp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../DashboardAgrotechApp.html">DashboardAgrotechApp package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Dashboard AgrotechApp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">DashboardAgrotechApp.graphs.food_purchase</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for DashboardAgrotechApp.graphs.food_purchase</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">locale</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xml.etree.ElementTree</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ET</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span> <span class="k">as</span> <span class="n">dt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">timedelta</span> <span class="k">as</span> <span class="n">td</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">DashboardAgrotechApp.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">DashboardAgrotechApp.api_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">ApiClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">DashboardAgrotechApp.graphs.empty_fig</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_empty_fig</span>
+
+
+<div class="viewcode-block" id="plot_food_purchase_history"><a class="viewcode-back" href="../../../Graphs/foodpurchase.html#DashboardAgrotechApp.graphs.food_purchase.plot_food_purchase_history">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">plot_food_purchase_history</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a line chart representing monthly food purchase expenses.</span>
+
+<span class="sd">    This function processes food purchase data, aggregates it by month, and creates a</span>
+<span class="sd">    line chart with custom text labels showing the total expense for each month.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    -----</span>
+<span class="sd">    data (pd.DataFrame): A DataFrame containing food purchase data with columns:</span>
+<span class="sd">        - `DocDate` (str or datetime): The document date of the purchase in &#39;%Y%m%d&#39; format.</span>
+<span class="sd">        - `DocTotal` (float): The total cost of the purchase.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    plotly.graph_objects.Figure: </span>
+<span class="sd">        A Plotly line chart showing monthly food purchase expenses.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - The chart uses custom text labels to display expense totals for alternating months.</span>
+<span class="sd">        - Labels are formatted in millions (e.g., `$1.23M`) for clarity.</span>
+<span class="sd">        - Spanish locale is set for month names in the x-axis.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">    -------</span>
+<span class="sd">    ValueError: </span>
+<span class="sd">        If `data` does not contain the required columns or if the date format is incorrect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_TIME</span><span class="p">,</span> <span class="s2">&quot;Spanish_Mexico&quot;</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;DocDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;DocDate&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;DocTotal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;DocTotal&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Period&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;DocDate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">grouped_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Period&#39;</span><span class="p">,</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="s1">&#39;DocTotal&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+        <span class="n">grouped_data</span><span class="p">,</span>
+        <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Period&#39;</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="s1">&#39;DocTotal&#39;</span><span class="p">,</span>
+        <span class="c1">#title=&quot;GASTO MENSUAL EN COMPRAS DE ALIMENTO&quot;,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;Period&#39;</span><span class="p">:</span> <span class="s1">&#39;Período&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;DocTotal&#39;</span><span class="p">:</span> <span class="s1">&#39;Total&#39;</span>
+        <span class="p">},</span>
+        <span class="n">markers</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">template</span><span class="o">=</span><span class="s1">&#39;seaborn&#39;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Etiquetas solo cada dos meses</span>
+    <span class="n">text_labels</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;$</span><span class="si">{</span><span class="n">x</span><span class="o">/</span><span class="mf">1e6</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">M&#39;</span>  <span class="c1"># Mostrar etiqueta solo para índices pares</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grouped_data</span><span class="p">[</span><span class="s1">&#39;DocTotal&#39;</span><span class="p">])</span>
+    <span class="p">]</span>
+    
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines+text&#39;</span><span class="p">,</span>  <span class="c1"># Mostrar línea y etiquetas de datos</span>
+        <span class="n">line_color</span> <span class="o">=</span> <span class="s2">&quot;#1C5D3A&quot;</span><span class="p">,</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">text_labels</span><span class="p">,</span>
+        <span class="n">textposition</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;top right&quot;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;bottom left&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grouped_data</span><span class="p">))]</span>
+    <span class="p">)</span>
+    <span class="c1"># Ajustar diseño del gráfico</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+        <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Fecha&quot;</span><span class="p">,</span>
+        <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Gasto Mensual&quot;</span><span class="p">,</span>
+        <span class="n">title_x</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>  <span class="c1"># Centrar título</span>
+        <span class="n">plot_bgcolor</span><span class="o">=</span><span class="s2">&quot;#F5F5F5&quot;</span><span class="p">,</span>
+        <span class="n">paper_bgcolor</span><span class="o">=</span><span class="s2">&quot;#F5F5F5&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1">#data = pd.read_csv(r&#39;C:\Users\jmarroquin\Downloads\compras.csv&#39;)</span>
+    <span class="n">api</span> <span class="o">=</span> <span class="n">ApiClient</span><span class="p">()</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="s2">&quot;query32&quot;</span><span class="p">,</span> <span class="s2">&quot;OPDN&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span> <span class="s2">&quot;&amp;Pagesize=500&amp;pagenumber=1&quot;</span><span class="p">)</span>
+    <span class="n">plot_food_purchase_history</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, AGROTECH RS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

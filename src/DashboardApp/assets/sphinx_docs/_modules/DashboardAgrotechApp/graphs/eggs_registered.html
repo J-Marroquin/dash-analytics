@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DashboardAgrotechApp.graphs.eggs_registered &mdash; Dashboard AgrotechApp 0.6.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+
+  
+      <script src="../../../_static/jquery.js"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+      <script src="../../../_static/doctools.js"></script>
+      <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Dashboard AgrotechApp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../DashboardAgrotechApp.html">DashboardAgrotechApp package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Dashboard AgrotechApp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">DashboardAgrotechApp.graphs.eggs_registered</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for DashboardAgrotechApp.graphs.eggs_registered</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">locale</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span> <span class="k">as</span> <span class="n">dt</span><span class="p">,</span> <span class="n">timedelta</span> <span class="k">as</span> <span class="n">td</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">calendar</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dash_bootstrap_components</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dbc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="n">html</span><span class="p">,</span> <span class="n">dcc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">DashboardAgrotechApp.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+
+
+
+<div class="viewcode-block" id="plot_monthly_eggs_alert"><a class="viewcode-back" href="../../../Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_monthly_eggs_alert">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">plot_monthly_eggs_alert</span><span class="p">(</span><span class="n">this_month_eggs_df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates an alert displaying the total number of eggs collected for the current month.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    -----</span>
+<span class="sd">    this_month_eggs_df (pd.DataFrame): </span>
+<span class="sd">        A DataFrame containing the total eggs for the current month in the column `Col1`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    dash_bootstrap_components.Alert: </span>
+<span class="sd">        An alert component showing the monthly total and current month.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">    -------</span>
+<span class="sd">    Exception:</span>
+<span class="sd">        Logs an error if an exception occurs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+    <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_TIME</span><span class="p">,</span> <span class="s2">&quot;Spanish_Mexico&quot;</span><span class="p">)</span>    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">this_month_eggs</span> <span class="o">=</span> <span class="n">this_month_eggs_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;Col1&quot;</span><span class="p">]</span>
+        <span class="n">this_month_eggs_alert</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            ** ESTE MES **</span>
+<span class="s2">            ### </span><span class="si">{</span><span class="n">this_month_eggs</span><span class="si">}</span>
+<span class="s2">            </span><span class="si">{</span><span class="n">dt</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="p">),</span> <span class="n">color</span><span class="o">=</span> <span class="s2">&quot;#7A9F41&quot;</span><span class="p">)</span>  
+        <span class="k">return</span> <span class="n">this_month_eggs_alert</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error plotting the graph in weekly_egg_registration_graph module: </span><span class="si">{</span><span class="n">ex</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+    
+
+<div class="viewcode-block" id="plot_season_eggs_alert"><a class="viewcode-back" href="../../../Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_season_eggs_alert">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">plot_season_eggs_alert</span><span class="p">(</span><span class="n">total_eggs_df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates an alert displaying the total number of eggs collected for the current season.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    -----</span>
+<span class="sd">    total_eggs_df (pd.DataFrame): </span>
+<span class="sd">        A DataFrame containing the total eggs for the season in the column `Col1`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    dash_bootstrap_components.Alert: </span>
+<span class="sd">        An alert component showing the total eggs and season year(s).</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">    -------</span>
+<span class="sd">    Exception:</span>
+<span class="sd">        Logs an error if an exception occurs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">total_eggs</span> <span class="o">=</span> <span class="n">total_eggs_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;Col1&quot;</span><span class="p">]</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+        <span class="n">current_year</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="n">year</span>
+        <span class="k">if</span> <span class="n">today</span> <span class="o">&lt;</span> <span class="n">dt</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">year</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">last_year</span> <span class="o">=</span> <span class="n">current_year</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">nom</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">last_year</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">current_year</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">next_year</span> <span class="o">=</span> <span class="n">current_year</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">nom</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">current_year</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">next_year</span><span class="si">}</span><span class="s1">&#39;</span>
+        
+        <span class="n">total_eggs_alert</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            ** TEMPORADA**</span>
+<span class="s2">            ### </span><span class="si">{</span><span class="n">total_eggs</span><span class="si">}</span>
+<span class="s2">            </span><span class="si">{</span><span class="n">nom</span><span class="si">}</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="p">),</span> <span class="n">color</span><span class="o">=</span> <span class="s2">&quot;#7A9F41&quot;</span><span class="p">)</span>    
+        <span class="k">return</span> <span class="n">total_eggs_alert</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error plotting the graph in weekly_egg_registration_graph module: </span><span class="si">{</span><span class="n">ex</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="plot_yesterday_eggs_alert"><a class="viewcode-back" href="../../../Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_yesterday_eggs_alert">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">plot_yesterday_eggs_alert</span><span class="p">(</span><span class="n">yesterday_eggs_df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates an alert displaying the total number of eggs collected yesterday.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    -----</span>
+<span class="sd">    yesterday_eggs_df (pd.DataFrame): </span>
+<span class="sd">        A DataFrame containing the total eggs collected yesterday in the column `Col1`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    dash_bootstrap_components.Alert: </span>
+<span class="sd">        An alert component showing the total eggs and yesterday&#39;s date.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">    -------</span>
+<span class="sd">    Exception: </span>
+<span class="sd">        Logs an error if an exception occurs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">yesterday_eggs</span> <span class="o">=</span> <span class="n">yesterday_eggs_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;Col1&quot;</span><span class="p">]</span>
+        <span class="n">yesterday</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">-</span> <span class="n">td</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">yesterday_eggs_alert</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            ** AYER **</span>
+<span class="s2">            ### </span><span class="si">{</span><span class="n">yesterday_eggs</span><span class="si">}</span>
+<span class="s2">            </span><span class="si">{</span><span class="n">yesterday</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">-%m-%Y&#39;</span><span class="p">)</span><span class="si">}</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="p">),</span> <span class="n">color</span><span class="o">=</span> <span class="s2">&quot;#7A9F41&quot;</span><span class="p">)</span> 
+
+        <span class="k">return</span> <span class="n">yesterday_eggs_alert</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error plotting the graph in weekly_egg_registration_graph module: </span><span class="si">{</span><span class="n">ex</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>   </div>
+
+<div class="viewcode-block" id="plot_day_before_yesterday_eggs_alert"><a class="viewcode-back" href="../../../Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_day_before_yesterday_eggs_alert">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">plot_day_before_yesterday_eggs_alert</span><span class="p">(</span><span class="n">before_yesterday_eggs_df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates an alert displaying the total number of eggs collected the day before yesterday.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    -----</span>
+<span class="sd">    before_yesterday_eggs_df (pd.DataFrame): </span>
+<span class="sd">        A DataFrame containing the total eggs collected the day before yesterday in the column `Col1`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    dash_bootstrap_components.Alert: </span>
+<span class="sd">        An alert component showing the total eggs and the day before yesterday&#39;s date.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">    -------</span>
+<span class="sd">    Exception:</span>
+<span class="sd">        Logs an error if an exception occurs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">before_yesterday_eggs</span> <span class="o">=</span> <span class="n">before_yesterday_eggs_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;Col1&quot;</span><span class="p">]</span>
+        <span class="n">before_yesterday</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">-</span> <span class="n">td</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">before_yesterday_eggs_alert</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            ** ANTEAYER **</span>
+<span class="s2">            ### </span><span class="si">{</span><span class="n">before_yesterday_eggs</span><span class="si">}</span>
+<span class="s2">            </span><span class="si">{</span><span class="n">before_yesterday</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">-%m-%Y&#39;</span><span class="p">)</span><span class="si">}</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="p">),</span> <span class="n">color</span><span class="o">=</span> <span class="s2">&quot;#7A9F41&quot;</span><span class="p">)</span> 
+
+        <span class="k">return</span> <span class="n">before_yesterday_eggs_alert</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error plotting the graph in weekly_egg_registration_graph module: </span><span class="si">{</span><span class="n">ex</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>       </div>
+
+
+<div class="viewcode-block" id="plot_last_30_days_eggs"><a class="viewcode-back" href="../../../Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_last_30_days_eggs">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">plot_last_30_days_eggs</span><span class="p">(</span><span class="n">last_30_days_eggs_df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates an alert displaying the total number of eggs collected in the last 30 days.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    -----</span>
+<span class="sd">    last_30_days_eggs_df (pd.DataFrame): </span>
+<span class="sd">        A DataFrame containing the total eggs collected in the last 30 days in the column `Col1`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    dash_bootstrap_components.Alert: </span>
+<span class="sd">        An alert component showing the total eggs for the last 30 days.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">    -------</span>
+<span class="sd">    Exception: </span>
+<span class="sd">        Logs an error if an exception occurs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+    <span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_TIME</span><span class="p">,</span> <span class="s2">&quot;Spanish_Mexico&quot;</span><span class="p">)</span>    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">monthly_eggs</span> <span class="o">=</span> <span class="n">last_30_days_eggs_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;Col1&quot;</span><span class="p">]</span>
+        <span class="n">montly_eggs_alert</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            ** ÚLTIMOS **</span>
+<span class="s2">            ### </span><span class="si">{</span><span class="n">monthly_eggs</span><span class="si">}</span>
+<span class="s2">            30 DÍAS</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="p">),</span> <span class="n">color</span><span class="o">=</span> <span class="s2">&quot;#7A9F41&quot;</span><span class="p">)</span>  
+        <span class="k">return</span> <span class="n">montly_eggs_alert</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error plotting the graph in weekly_egg_registration_graph module: </span><span class="si">{</span><span class="n">ex</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="plot_end_month_forecast_eggs"><a class="viewcode-back" href="../../../Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_end_month_forecast_eggs">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">plot_end_month_forecast_eggs</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates an alert displaying the forecasted total number of eggs for the end of the current month.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    -----</span>
+<span class="sd">    data (pd.DataFrame): </span>
+<span class="sd">        A DataFrame containing daily egg collection data with columns:</span>
+<span class="sd">        - `U_ReceptionDate` (datetime): The date of egg reception.</span>
+<span class="sd">        - `Col2` (int): The number of eggs collected.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    dash_bootstrap_components.Alert: </span>
+<span class="sd">        An alert component showing the forecasted total eggs for the current month.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">    -------</span>
+<span class="sd">    Exception: </span>
+<span class="sd">        Logs an error if an exception occurs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+    <span class="n">today</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+    <span class="n">start_date</span> <span class="o">=</span> <span class="n">dt</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">year</span><span class="p">,</span><span class="n">today</span><span class="o">.</span><span class="n">month</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">last_day</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">monthrange</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">month</span><span class="p">)</span>
+    <span class="n">end_date</span> <span class="o">=</span> <span class="n">dt</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">today</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">last_day</span><span class="p">)</span>
+ 
+
+    <span class="n">date_range</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="n">end_date</span><span class="p">)</span>
+    <span class="n">calendar_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;U_ReceptionDate&#39;</span><span class="p">:</span> <span class="n">date_range</span><span class="p">})</span>
+    <span class="n">calendar_df</span><span class="p">[</span><span class="s1">&#39;U_ReceptionDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">calendar_df</span><span class="p">[</span><span class="s1">&#39;U_ReceptionDate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Col2&#39;</span><span class="p">:</span> <span class="s1">&#39;Huevos&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;U_ReceptionDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;U_ReceptionDate&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Huevos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Huevos&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">data_filtered</span> <span class="o">=</span> <span class="n">data</span><span class="p">[(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;U_ReceptionDate&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">start_date</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;U_ReceptionDate&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">today</span><span class="p">)]</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">data_filtered</span><span class="p">[</span><span class="s1">&#39;Huevos&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">data_copy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">calendar_df</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;U_ReceptionDate&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">mean</span><span class="p">)</span>
+    <span class="n">forecast</span> <span class="o">=</span> <span class="n">data_copy</span><span class="p">[</span><span class="s1">&#39;Huevos&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">forecast_eggs_alert</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Alert</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            ** ESTIMACIÓN **</span>
+<span class="s2">            ### </span><span class="si">{</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">forecast</span><span class="p">)</span><span class="si">}</span>
+<span class="s2">            Fin de mes</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="p">),</span> <span class="n">color</span><span class="o">=</span> <span class="s2">&quot;#7A9F41&quot;</span><span class="p">)</span>  
+        <span class="k">return</span> <span class="n">forecast_eggs_alert</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error plotting the graph in weekly_egg_registration_graph module: </span><span class="si">{</span><span class="n">ex</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+    
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, AGROTECH RS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

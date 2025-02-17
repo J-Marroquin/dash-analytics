@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DashboardAgrotechApp package &mdash; Dashboard AgrotechApp 0.6.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+      <script src="_static/jquery.js"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+      <script src="_static/doctools.js"></script>
+      <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Program module" href="DashboardAgrotechApp/program.html" />
+    <link rel="prev" title="Welcome to Dashboard AgrotechApp’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Dashboard AgrotechApp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">DashboardAgrotechApp package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modules">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DashboardAgrotechApp/program.html">Program module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DashboardAgrotechApp/apiclient.html">api_client module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DashboardAgrotechApp/const.html">const module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DashboardAgrotechApp/graphmanager.html">graph_manager module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DashboardAgrotechApp/logger.html">logger module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DashboardAgrotechApp.pages.html">DashboardAgrotechApp.pages package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DashboardAgrotechApp.layout.html">DashboardAgrotechApp.layout package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DashboardAgrotechApp.graphs.html">DashboardAgrotechApp.graphs package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Dashboard AgrotechApp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">DashboardAgrotechApp package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/DashboardAgrotechApp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dashboardagrotechapp-package">
+<h1>DashboardAgrotechApp package<a class="headerlink" href="#dashboardagrotechapp-package" title="Permalink to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>The <cite>DashboardAgrotechApp</cite> package is the core of the Agrotech Dashboard application. It provides a modular architecture for creating an interactive, data-driven dashboard tailored to the agricultural industry.</p>
+<p>This package includes the following key components:</p>
+<ul class="simple">
+<li><p><strong>Program Module:</strong> The entry point of the application, which initializes and runs the Dash server.</p></li>
+<li><p><strong>API Client:</strong> Handles communication with the backend API, including authentication and data fetching.</p></li>
+<li><p><strong>Constants Module:</strong> Manages constant values and reusable data throughout the application.</p></li>
+<li><p><strong>Graph Manager:</strong> Dynamically loads and manages graph-rendering functions.</p></li>
+<li><p><strong>Logger:</strong> Provides centralized logging for debugging and monitoring.</p></li>
+</ul>
+<p>Additionally, it contains subpackages for managing layouts and creating visualizations:</p>
+<ul class="simple">
+<li><p><strong>`DashboardAgrotechApp.layout`:</strong> Defines the structure and UI elements of the dashboard, including filters and navigation.</p></li>
+<li><p><strong>`DashboardAgrotechApp.graphs`:</strong> Implements a variety of data visualizations, such as bar charts, line graphs, and custom placeholders.</p></li>
+</ul>
+<p>The architecture ensures that the application is scalable, maintainable, and easy to extend with new features.</p>
+</section>
+<section id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Module contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="DashboardAgrotechApp/program.html">Program module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DashboardAgrotechApp/program.html#DashboardAgrotechApp.Program.Program"><code class="docutils literal notranslate"><span class="pre">Program</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DashboardAgrotechApp/apiclient.html">api_client module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DashboardAgrotechApp/apiclient.html#DashboardAgrotechApp.api_client.ApiClient"><code class="docutils literal notranslate"><span class="pre">ApiClient</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DashboardAgrotechApp/const.html">const module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DashboardAgrotechApp/const.html#DashboardAgrotechApp.const.Constant"><code class="docutils literal notranslate"><span class="pre">Constant</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DashboardAgrotechApp/graphmanager.html">graph_manager module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DashboardAgrotechApp/graphmanager.html#DashboardAgrotechApp.graph_manager.GraphManager"><code class="docutils literal notranslate"><span class="pre">GraphManager</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DashboardAgrotechApp/logger.html">logger module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DashboardAgrotechApp/logger.html#DashboardAgrotechApp.logger.Logger"><code class="docutils literal notranslate"><span class="pre">Logger</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="DashboardAgrotechApp.pages.html">DashboardAgrotechApp.pages package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DashboardAgrotechApp.pages.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DashboardAgrotechApp.pages.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Pages/dashboard.html">pages.dashboard Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Pages/dashboard.html#DashboardAgrotechApp.pages.dashboard.Dashboard"><code class="docutils literal notranslate"><span class="pre">Dashboard</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DashboardAgrotechApp.layout.html">DashboardAgrotechApp.layout package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DashboardAgrotechApp.layout.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DashboardAgrotechApp.layout.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Layout/filters.html">layout.filters module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Layout/filters.html#DashboardAgrotechApp.layout.filters.filters_card"><code class="docutils literal notranslate"><span class="pre">filters_card()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DashboardAgrotechApp.graphs.html">DashboardAgrotechApp.graphs package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DashboardAgrotechApp.graphs.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DashboardAgrotechApp.graphs.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Graphs/eggsregistered.html">DashboardAgrotechApp.graphs.eggs_registered module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_day_before_yesterday_eggs_alert"><code class="docutils literal notranslate"><span class="pre">plot_day_before_yesterday_eggs_alert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_end_month_forecast_eggs"><code class="docutils literal notranslate"><span class="pre">plot_end_month_forecast_eggs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_last_30_days_eggs"><code class="docutils literal notranslate"><span class="pre">plot_last_30_days_eggs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_monthly_eggs_alert"><code class="docutils literal notranslate"><span class="pre">plot_monthly_eggs_alert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_season_eggs_alert"><code class="docutils literal notranslate"><span class="pre">plot_season_eggs_alert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/eggsregistered.html#DashboardAgrotechApp.graphs.eggs_registered.plot_yesterday_eggs_alert"><code class="docutils literal notranslate"><span class="pre">plot_yesterday_eggs_alert()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Graphs/emptyfig.html">graphs.empty_fig module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/emptyfig.html#DashboardAgrotechApp.graphs.empty_fig.create_empty_fig"><code class="docutils literal notranslate"><span class="pre">create_empty_fig()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Graphs/foodonstock.html">graphs.food_on_stock module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/foodonstock.html#DashboardAgrotechApp.graphs.food_on_stock.plot_food_grid"><code class="docutils literal notranslate"><span class="pre">plot_food_grid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Graphs/foodpurchase.html">graphs.food_purchase module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/foodpurchase.html#DashboardAgrotechApp.graphs.food_purchase.plot_food_purchase_history"><code class="docutils literal notranslate"><span class="pre">plot_food_purchase_history()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Graphs/materialrevaluation.html">graphs.material_revaluation module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/materialrevaluation.html#DashboardAgrotechApp.graphs.material_revaluation.plot_material_revaluation"><code class="docutils literal notranslate"><span class="pre">plot_material_revaluation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Graphs/truzzyonstock.html">graphs.truzzy_on_stock module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/truzzyonstock.html#DashboardAgrotechApp.graphs.truzzy_on_stock.plot_last_week_truzzy"><code class="docutils literal notranslate"><span class="pre">plot_last_week_truzzy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/truzzyonstock.html#DashboardAgrotechApp.graphs.truzzy_on_stock.plot_truzzy_grid"><code class="docutils literal notranslate"><span class="pre">plot_truzzy_grid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Graphs/eggregistration.html">graphs.weekly_egg_registration_graph module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Graphs/eggregistration.html#DashboardAgrotechApp.graphs.weekly_egg_registration_graph.plot_eggs_entry"><code class="docutils literal notranslate"><span class="pre">plot_eggs_entry()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Dashboard AgrotechApp’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="DashboardAgrotechApp/program.html" class="btn btn-neutral float-right" title="Program module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, AGROTECH RS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

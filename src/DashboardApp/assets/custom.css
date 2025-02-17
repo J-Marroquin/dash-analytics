@@ -1,0 +1,125 @@
+@media (max-width: 1024px) {
+    .dash-graph {
+        zoom: 0.80;
+    }
+    .dash-graph-container {
+        width: 100% !important;  /* Asegura que el gráfico use todo el ancho disponible */
+        overflow-x: auto;  /* Permite desplazamiento horizontal si es necesario */
+    }
+
+    .dash-graph-container svg {
+        transform: scale(0.9);  /* Reduce el tamaño del gráfico */
+        transform-origin: top left;
+    }
+
+    .dash-graph-container text {
+        font-size: 10px !important;  /* Reduce tamaño del texto en los ejes */
+    }
+
+    .dash-graph-container .legend {
+        font-size: 10px !important; /* Ajusta tamaño de la leyenda */
+    }
+
+    /* Forzar salto de línea en etiquetas del eje Y */
+    .dash-graph-container .ytick text {
+        white-space: pre-line !important;  /* Permite saltos de línea */
+        word-wrap: break-word !important;  /* Rompe palabras largas */
+        text-anchor: end !important;  /* Asegura alineación centrada */
+        font-size: 10px !important;  /* Reduce el tamaño del texto */
+    }
+}
+
+
+/* Ajusta el tamaño de los gráficos en móvil */
+@media (max-width: 768px) {
+    .dash-graph {
+        zoom: 0.75;
+    }
+    .dash-graph-container {
+        width: 100% !important;  /* Asegura que el gráfico use todo el ancho disponible */
+        overflow-x: auto;  /* Permite desplazamiento horizontal si es necesario */
+    }
+
+    .dash-graph-container svg {
+        transform: scale(0.9);  /* Reduce el tamaño del gráfico */
+        transform-origin: top left;
+    }
+
+    .dash-graph-container text {
+        font-size: 10px !important;  /* Reduce tamaño del texto en los ejes */
+    }
+
+    .dash-graph-container .legend {
+        font-size: 10px !important; /* Ajusta tamaño de la leyenda */
+    }
+
+    /* Forzar salto de línea en etiquetas del eje Y */
+    .dash-graph-container .ytick text {
+        white-space: pre-line !important;  /* Permite saltos de línea */
+        word-wrap: break-word !important;  /* Rompe palabras largas */
+        text-anchor: end !important;  /* Asegura alineación centrada */
+        font-size: 10px !important;  /* Reduce el tamaño del texto */
+    }
+}
+
+@media (max-width: 425px) {
+    .dash-graph {
+        zoom: 0.6;
+    }
+    .dash-graph-container {
+        width: 100% !important;  /* Asegura que el gráfico use todo el ancho disponible */
+        overflow-x: auto;  /* Permite desplazamiento horizontal si es necesario */
+    }
+
+    .dash-graph-container svg {
+        transform: scale(0.9);  /* Reduce el tamaño del gráfico */
+        transform-origin: top left;
+    }
+
+    .dash-graph-container text {
+        font-size: 10px !important;  /* Reduce tamaño del texto en los ejes */
+    }
+
+    .dash-graph-container .legend {
+        font-size: 10px !important; /* Ajusta tamaño de la leyenda */
+    }
+
+    /* Forzar salto de línea en etiquetas del eje Y */
+    .dash-graph-container .ytick text {
+        white-space: pre-line !important;  /* Permite saltos de línea */
+        word-wrap: break-word !important;  /* Rompe palabras largas */
+        text-anchor: end !important;  /* Asegura alineación centrada */
+        font-size: 10px !important;  /* Reduce el tamaño del texto */
+    }
+}
+
+@media (max-width: 320px) {
+    .dash-graph {
+        zoom: 0.5;
+    }
+    .dash-graph-container {
+        width: 100% !important;  /* Asegura que el gráfico use todo el ancho disponible */
+        overflow-x: auto;  /* Permite desplazamiento horizontal si es necesario */
+    }
+
+    .dash-graph-container svg {
+        transform: scale(0.9);  /* Reduce el tamaño del gráfico */
+        transform-origin: top left;
+    }
+
+    .dash-graph-container text {
+        font-size: 10px !important;  /* Reduce tamaño del texto en los ejes */
+    }
+
+    .dash-graph-container .legend {
+        font-size: 10px !important; /* Ajusta tamaño de la leyenda */
+    }
+
+    /* Forzar salto de línea en etiquetas del eje Y */
+    .dash-graph-container .ytick text {
+        white-space: pre-line !important;  /* Permite saltos de línea */
+        word-wrap: break-word !important;  /* Rompe palabras largas */
+        text-anchor: end !important;  /* Asegura alineación centrada */
+        font-size: 10px !important;  /* Reduce el tamaño del texto */
+    }
+}

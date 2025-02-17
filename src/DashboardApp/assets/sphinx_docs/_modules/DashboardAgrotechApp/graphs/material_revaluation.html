@@ -1,0 +1,230 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DashboardAgrotechApp.graphs.material_revaluation &mdash; Dashboard AgrotechApp 0.6.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+
+  
+      <script src="../../../_static/jquery.js"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+      <script src="../../../_static/doctools.js"></script>
+      <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Dashboard AgrotechApp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../DashboardAgrotechApp.html">DashboardAgrotechApp package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Dashboard AgrotechApp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">DashboardAgrotechApp.graphs.material_revaluation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for DashboardAgrotechApp.graphs.material_revaluation</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xml.etree.ElementTree</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ET</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span> <span class="k">as</span> <span class="n">dt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">timedelta</span> <span class="k">as</span> <span class="n">td</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">DashboardAgrotechApp.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">DashboardAgrotechApp.api_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">ApiClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">DashboardAgrotechApp.graphs.empty_fig</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_empty_fig</span>
+
+<div class="viewcode-block" id="plot_material_revaluation"><a class="viewcode-back" href="../../../Graphs/materialrevaluation.html#DashboardAgrotechApp.graphs.material_revaluation.plot_material_revaluation">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">plot_material_revaluation</span><span class="p">(</span><span class="n">food_exit_data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">reproduccion_data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">warehouses_data</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">end</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a horizontal bar chart showing the material revaluation based on food exit and reproduction data.</span>
+
+<span class="sd">    This function combines data from food exits and reproduction entries, aligns it with warehouse information, filters it</span>
+<span class="sd">    by a specified date range, and calculates total consumption (`LineTotal`) and quantities grouped by item description</span>
+<span class="sd">    and warehouse name. It then visualizes the data in a stacked bar chart.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    -----</span>
+<span class="sd">        food_exit_data (pd.DataFrame): </span>
+<span class="sd">            A DataFrame containing data on food exits with columns:</span>
+<span class="sd">            - `DocNum`, `DocDate`, `Ref2`, `WhsCode`, `ItemCode`, `Dscription`, `Quantity`, `LineTotal`.</span>
+<span class="sd">        reproduccion_data (pd.DataFrame): </span>
+<span class="sd">            A DataFrame containing reproduction data with the same structure as `food_exit_data`.</span>
+<span class="sd">        warehouses_data (pd.DataFrame): </span>
+<span class="sd">            A DataFrame with warehouse information containing columns `WhsCode` and `WhsName`.</span>
+<span class="sd">        start (str): </span>
+<span class="sd">            The start date of the range in the format &#39;YYYY-MM-DD&#39;.</span>
+<span class="sd">        end (str): </span>
+<span class="sd">            The end date of the range in the format &#39;YYYY-MM-DD&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">        plotly.graph_objects.Figure: </span>
+<span class="sd">            A Plotly bar chart showing material revaluation grouped by item and warehouse.</span>
+<span class="sd">        None: </span>
+<span class="sd">            If an exception occurs during the process, logs the error and returns a placeholder figure.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - The chart uses custom colors for specific warehouse stages (e.g., `DESARROLLO`, `ENGORDA`, `REPRODUCCIÓN`).</span>
+<span class="sd">        - Missing dates in the input data are handled gracefully.</span>
+<span class="sd">        - Returns an empty placeholder chart if input data is empty.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">    -------</span>
+<span class="sd">    ValueError: </span>
+<span class="sd">        If the `start` or `end` dates are not in the correct format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">food_exit_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">create_empty_fig</span><span class="p">(</span><span class="s2">&quot;No hay datos disponibles&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">reproduccion_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">create_empty_fig</span><span class="p">(</span><span class="s2">&quot;No hay datos disponibles&quot;</span><span class="p">)</span>
+    
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+    <span class="n">api</span> <span class="o">=</span> <span class="n">ApiClient</span><span class="p">()</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+
+        <span class="n">start_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">end_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>       
+        <span class="n">reproduccion_data</span><span class="p">[</span><span class="s1">&#39;Ref2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">reproduccion_data</span><span class="p">[</span><span class="s1">&#39;WhsCode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;RAN09&#39;</span>
+        <span class="n">column_order</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DocNum&quot;</span><span class="p">,</span> <span class="s2">&quot;DocDate&quot;</span><span class="p">,</span> <span class="s2">&quot;Ref2&quot;</span><span class="p">,</span> <span class="s2">&quot;WhsCode&quot;</span><span class="p">,</span> <span class="s2">&quot;ItemCode&quot;</span><span class="p">,</span> <span class="s2">&quot;Dscription&quot;</span><span class="p">,</span> <span class="s2">&quot;Quantity&quot;</span><span class="p">,</span> <span class="s2">&quot;LineTotal&quot;</span><span class="p">]</span>
+        <span class="n">reproduccion_data</span> <span class="o">=</span> <span class="n">reproduccion_data</span><span class="p">[</span><span class="n">column_order</span><span class="p">]</span> 
+
+        <span class="n">combined_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">food_exit_data</span><span class="p">,</span> <span class="n">reproduccion_data</span><span class="p">],</span><span class="n">ignore_index</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">combined_df</span> <span class="o">=</span> <span class="n">combined_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">warehouses_data</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;WhsCode&#39;</span><span class="p">)</span>
+        <span class="n">combined_df</span><span class="p">[</span><span class="s1">&#39;DocDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">combined_df</span><span class="p">[</span><span class="s1">&#39;DocDate&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span> <span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">combined_df</span><span class="p">[</span><span class="s1">&#39;LineTotal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">combined_df</span><span class="p">[</span><span class="s1">&#39;LineTotal&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">combined_df</span><span class="p">[</span><span class="s1">&#39;Quantity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">combined_df</span><span class="p">[</span><span class="s1">&#39;Quantity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> 
+        <span class="n">filtered_df</span> <span class="o">=</span> <span class="n">combined_df</span><span class="p">[(</span><span class="n">combined_df</span><span class="p">[</span><span class="s2">&quot;DocDate&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">start_date</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">combined_df</span><span class="p">[</span><span class="s2">&quot;DocDate&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">end_date</span><span class="p">)]</span>
+        <span class="n">df_grouped</span> <span class="o">=</span> <span class="n">filtered_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;Dscription&quot;</span><span class="p">,</span> <span class="s2">&quot;WhsName&quot;</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s2">&quot;LineTotal&quot;</span><span class="p">:</span> <span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="s2">&quot;Quantity&quot;</span><span class="p">:</span> <span class="s2">&quot;sum&quot;</span><span class="p">})</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+            <span class="n">df_grouped</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="s2">&quot;LineTotal&quot;</span><span class="p">,</span>          <span class="c1"># Total de LineTotal en el eje X</span>
+            <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Dscription&quot;</span><span class="p">,</span>         <span class="c1"># Descripción del artículo en el eje Y</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;WhsName&quot;</span><span class="p">,</span>        <span class="c1"># Colores basados en el almacén</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">,</span>        <span class="c1"># Barras horizontales</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;LineTotal&quot;</span><span class="p">,</span>  <span class="c1"># Texto con formato de LineTotal</span>
+            <span class="n">labels</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;Dscription&quot;</span><span class="p">:</span> <span class="s2">&quot;Artículo&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;LineTotal&quot;</span><span class="p">:</span> <span class="s2">&quot;Total consumido&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;WhsName&quot;</span><span class="p">:</span> <span class="s2">&quot;Almacén&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">template</span><span class="o">=</span> <span class="s2">&quot;seaborn&quot;</span>
+        <span class="p">)</span>
+        <span class="c1"># Personalizamos el diseño</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+            <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;stack&quot;</span><span class="p">,</span>       <span class="c1"># Apilado</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Total&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Descripción del Artículo&quot;</span><span class="p">,</span>
+            <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>       <span class="c1"># Mostrar leyenda</span>
+            <span class="n">legend</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">title</span><span class="o">=</span><span class="s2">&quot;ETAPA&quot;</span><span class="p">,</span>
+                <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">,</span>               <span class="c1"># Horizontal</span>
+                <span class="n">y</span><span class="o">=-</span><span class="mf">0.3</span><span class="p">,</span>                        <span class="c1"># Posición vertical por encima del gráfico</span>
+                <span class="n">x</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>                         <span class="c1"># Centrar horizontalmente</span>
+                <span class="n">xanchor</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                <span class="n">yanchor</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">plot_bgcolor</span><span class="o">=</span><span class="s2">&quot;#F5F5F5&quot;</span><span class="p">,</span>
+            <span class="n">paper_bgcolor</span><span class="o">=</span><span class="s2">&quot;#F5F5F5&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">custom_colors</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;DESARROLLO&quot;</span><span class="p">:</span> <span class="s2">&quot;#41A047&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;ENGORDA&quot;</span><span class="p">:</span> <span class="s2">&quot;#1C5D3A&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;REPRODUCCIÓN&quot;</span><span class="p">:</span> <span class="s2">&quot;#7A9F41&quot;</span><span class="p">,</span>  
+        <span class="p">}</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">for_each_trace</span><span class="p">(</span><span class="k">lambda</span> <span class="n">trace</span><span class="p">:</span> <span class="n">trace</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">custom_colors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;#999999&quot;</span><span class="p">))))</span>
+        <span class="c1"># Ajustamos el formato del texto en las barras</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">texttemplate</span><span class="o">=</span><span class="s2">&quot;$%</span><span class="si">{x:,}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">textposition</span><span class="o">=</span><span class="s2">&quot;inside&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error plotting the graph in material_revaluation module: </span><span class="si">{</span><span class="n">ex</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">create_empty_fig</span><span class="p">(</span><span class="s2">&quot;Something went wrong!&quot;</span><span class="p">)</span>   </div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">api</span><span class="o">=</span> <span class="n">ApiClient</span><span class="p">()</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+    <span class="n">food_exit_df</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="s2">&quot;query28&quot;</span><span class="p">,</span><span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;OMRV&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="s1">&#39;&amp;startdate=20241201&amp;enddate=20250115&amp;pagesize=500&amp;pagenumber1&#39;</span><span class="p">)</span>
+    <span class="n">reproduccion_food_exit</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="s2">&quot;query29&quot;</span><span class="p">,</span> <span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;OIGE&quot;</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="s1">&#39;&amp;startdate=20241201&amp;enddate=20250115&amp;pagesize=500&amp;pagenumber1&#39;</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plot_material_revaluation</span><span class="p">(</span><span class="n">food_exit_data</span><span class="o">=</span><span class="n">food_exit_df</span><span class="p">,</span> <span class="n">reproduccion_data</span><span class="o">=</span> <span class="n">reproduccion_food_exit</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">&quot;20241223&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;20250105&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, AGROTECH RS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
